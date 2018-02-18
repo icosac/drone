@@ -27,9 +27,8 @@ def main ():
 
 if __name__== "__main__":
 	try:
-        main()
- 
-        # Reset by pressing CTRL + C
-    except KeyboardInterrupt:
-        print("Measurement stopped by User")
-        GPIO.cleanup()
+		main()
+	# Reset by pressing CTRL + C
+	except KeyboardInterrupt:
+		print("Measurement stopped by User")
+		GPIO.cleanup()
