@@ -360,7 +360,7 @@ Vector MPU6050::readRawAccel(void)
     #if ARDUINO >= 100
 	uint8_t xha = Wire.read();
 	uint8_t xla = Wire.read();
-        uint8_t yha = Wire.read();
+    uint8_t yha = Wire.read();
 	uint8_t yla = Wire.read();
 	uint8_t zha = Wire.read();
 	uint8_t zla = Wire.read();
