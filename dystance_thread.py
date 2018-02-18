@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import time
 
 #GPIO Mode (BOARD / BCM)
 GPIO.setmode(GPIO.BCM)
@@ -13,9 +14,10 @@ GPIO.setup(ACTIVATE, GPIO.IN)
 
 number=[]
 
-def main (argv):
+def main ():
 	while True:
-		if GPIO.input(ACTIVATE)==1:
+		if GPIO.input(ACTIVATE)==0:
+			print(GPIO.input(ACTIVATE))
 			time.sleep(0.0001)
 			for i in range (15, 0):
 				number.append(GPIO.input(READ))
@@ -24,4 +26,10 @@ def main (argv):
 
 
 if __name__== "__main__":
-	main ()
+	try:
+        main()
+ 
+        # Reset by pressing CTRL + C
+    except KeyboardInterrupt:
+        print("Measurement stopped by User")
+        GPIO.cleanup()
