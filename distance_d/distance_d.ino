@@ -39,12 +39,21 @@ void convert(double dist){
 	}
 }
 
+<<<<<<< HEAD
 void send(int* bin){
 	digitalWrite(ACTIVATE, HIGH); //Set pin HIGH to say that it's transmitting
 	delay(500); //Wait 1 ms
 	for (int i=0; i<BIT; i++){
 		digitalWrite(SEND, (bin[i]==1 ? HIGH : LOW)); //Send bit
 		delay(500);
+=======
+void send(){
+	digitalWrite(ACTIVATE, HIGH); //Setto pin attivo per dire che sto per mandare segnale
+	delay(1); //Aspetto 1 millisecondo
+	for (int i=0; i<BIT; i++){
+		digitalWrite(SEND, (bin[i]==1 ? HIGH : LOW)); //Invio bit
+		delay(1);
+>>>>>>> 7c4adc0c138c4b5e8f41aca0adeb696722540716
 	}
 	digitalWrite(ACTIVATE, LOW); //Close
 }
@@ -55,6 +64,7 @@ void setup() {
 	pinMode(SEND, OUTPUT);
 	pinMode(ACTIVATE, OUTPUT);
 	Serial.begin(9600);
+	digitalWrite(ACTIVATE, LOW);
 }
 
 void loop() {
@@ -64,10 +74,10 @@ void loop() {
 	delayMicroseconds(10);
 	digitalWrite(triggerPort, LOW);
 
-	double length = pulseIn(echoPort, HIGH);
-
+	long length = pulseIn(echoPort, HIGH);
+	Serial.println("ok");	
 	double distance = 0.034 * length / 2;
-
+	Serial.println("ok");
 	Serial.print("distance: ");
 
 	//dopo 38ms è fuori dalla portata del sensore
@@ -78,8 +88,11 @@ void loop() {
 		Serial.print(distance); 
 		Serial.println(" cm");
 	}
-	
-	send(convert(distance));
+	Serial.println("ok");
+	convert(distance);
+	Serial.println("ok");
+	send();
+	Serial.println("ok");
 
 	//Aspetta 1000 millisecondi
 	delay(1000);
