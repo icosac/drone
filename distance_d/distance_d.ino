@@ -1,24 +1,26 @@
+//Definitions of PINS
 #define triggerPort 9
 #define echoPort 10
 #define SEND 12
 #define ACTIVATE 11
+//Definitions of costants
 #define BIT 16
 
-int bin[BIT];
+int bin[BIT]; //
 
 void convert(double dist){
 	for (int i=0; i<BIT; i++){ //Reset binary
 		bin[i]=0;
 	}
 	dist*=100; 
-	long dist_l=(long) dist; //Tronco e converto in long
+	long dist_l=(long) dist; //Troncated and converted to long
 	int i=0;
 	while(dist_l>1 && i<BIT){
 		bin[i]=dist_l%2;
 		dist_l=(long) (dist_l/2);
 		i++;
 	}
-	if (i<BIT){ //Controlla anche l'ultimo carattere
+	if (i<BIT){ //Check also the last one
 		if (dist_l==1){
 			bin[i]=1;
 		}
@@ -31,20 +33,20 @@ void convert(double dist){
 		Serial.print("\n");
 	}
 	else{
-		for (int a=0; a<BIT; a++){ //QUESTO SIGNIFICA ERRORE
+		for (int a=0; a<BIT; a++){ //THIS MEANS ERROR
 			bin[a]=0;
 		}
 	}
 }
 
 void send(int* bin){
-	digitalWrite(ACTIVATE, HIGH); //Setto pin attivo per dire che sto per mandare segnale
-	delay(500); //Aspetto 1 millisecondo
+	digitalWrite(ACTIVATE, HIGH); //Set pin HIGH to say that it's transmitting
+	delay(500); //Wait 1 ms
 	for (int i=0; i<BIT; i++){
-		digitalWrite(SEND, (bin[i]==1 ? HIGH : LOW)); //Invio bit
+		digitalWrite(SEND, (bin[i]==1 ? HIGH : LOW)); //Send bit
 		delay(500);
 	}
-	digitalWrite(ACTIVATE, LOW); //Chiudo
+	digitalWrite(ACTIVATE, LOW); //Close
 }
 
 void setup() {
@@ -56,9 +58,8 @@ void setup() {
 }
 
 void loop() {
-	//porta bassa l'uscita del trigger
 	digitalWrite(triggerPort, LOW);
-	//invia un impulso di 10microsec su trigger
+	//Send 10 microseconds impulse on trigger
 	digitalWrite(triggerPort, HIGH);
 	delayMicroseconds(10);
 	digitalWrite(triggerPort, LOW);
