@@ -6,15 +6,20 @@
 
 int bin[BIT];
 
+
+/////////////////////////BUG/////////////////////
+//Sometimes it adds 0.01 or subs 0.01. Not big of a deal, but neither the best behaviour. 
 void convert(double dist){
 	for (int i=0; i<BIT; i++){ //Reset binary
 		bin[i]=0;
 	}
 	dist*=100; 
-	long dist_l=(long) dist; //Tronco e converto in long
+	long dist_l=dist; //Tronco e converto in long
+	Serial.println(dist_l);
 	int i=0;
 	while(dist_l>1 && i<BIT){
 		bin[i]=dist_l%2;
+		printf("%i   -    %i\n", dist_l, bin[i]);
 		dist_l=(long) (dist_l/2);
 		i++;
 	}
@@ -25,7 +30,7 @@ void convert(double dist){
 		else{
 			bin[i]=0;
 		}
-		for (int a=BIT-1; a>=0; a++){
+		for (int a=BIT-1; a>=0; a--){
 			Serial.print(bin[a]);
 		}
 		Serial.print("\n");
@@ -39,10 +44,10 @@ void convert(double dist){
 
 void send(){
 	digitalWrite(ACTIVATE, HIGH); //Setto pin attivo per dire che sto per mandare segnale
-	delay(1); //Aspetto 1 millisecondo
+	delay(100); //Aspetto 1 millisecondo
 	for (int i=0; i<BIT; i++){
 		digitalWrite(SEND, (bin[i]==1 ? HIGH : LOW)); //Invio bit
-		delay(1);
+		delay(10);
 	}
 	digitalWrite(ACTIVATE, LOW); //Chiudo
 }
@@ -64,10 +69,10 @@ void loop() {
 	delayMicroseconds(10);
 	digitalWrite(triggerPort, LOW);
 
-	long length = pulseIn(echoPort, HIGH);
-	Serial.println("ok");	
+	double length = pulseIn(echoPort, HIGH);
+
 	double distance = 0.034 * length / 2;
-	Serial.println("ok");
+
 	Serial.print("distance: ");
 
 	//dopo 38ms è fuori dalla portata del sensore
@@ -78,11 +83,9 @@ void loop() {
 		Serial.print(distance); 
 		Serial.println(" cm");
 	}
-	Serial.println("ok");
+
 	convert(distance);
-	Serial.println("ok");
 	send();
-	Serial.println("ok");
 
 	//Aspetta 1000 millisecondi
 	delay(1000);
