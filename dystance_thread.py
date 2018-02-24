@@ -16,10 +16,10 @@ number=[]
 
 def main ():
 	while True:
+		print(GPIO.input(ACTIVATE))
 		if GPIO.input(ACTIVATE)==0:
-			print(GPIO.input(ACTIVATE))
 			time.sleep(0.0001)
-			for i in range (15, 0):
+			for i in range (0, 15):
 				number.append(GPIO.input(READ))
 				time.sleep(0.0001)
 			print(number)
