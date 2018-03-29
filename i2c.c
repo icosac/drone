@@ -8,9 +8,10 @@ int fd;
 int main (){
 	fd=wiringPiI2CSetup(ADDR);
 	int i; 
-	for (i=0x00; i<0xFF; i++){
-		printf("Mando: %x", i);
-		wiringPiI2CWrite(fd, i);	
+	for (i=0; i<10; i++){
+		printf("Mando: %d", i);
+		wiringPiI2CWriteReg8(fd, 0, i);
+		delay(100);
 	}
 	return 0;
 }
