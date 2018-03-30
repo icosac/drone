@@ -25,7 +25,7 @@ void setup() {
 
 void loop() {
 	delay(1000);
-	distance=random(-2, 3);
+	distance=random(-2, 11);
 	if (distance==-2){
 		distance=550;
 	}
@@ -60,7 +60,6 @@ void sendData(){
 		else {
 			byte1=(byte)distance; byte2=0x00;
 		}
-		Serial.print("Sent: ");Serial.print(byte1);Serial.print("; ");Serial.println(byte2);
 	}
 	else {
 		byte1=0xff; byte2=0xf9;
