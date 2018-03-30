@@ -1,40 +1,16 @@
 import RPi.GPIO as GPIO
-from smbus2 import SMBus, i2c_msg
+import i2connection as i2c
 import time
-
-# for RPI version 0, use “bus = smbus.SMBus(0)”
-bus = SMBus(1)
 
 # This is the addresses where I can find Arduino
 addresses = [0x04]
 
-# Send value to arduino
-def send(value):
-	msg=None
-	for address in addresses:
-		print("ok")
-		msg=i2c_msg.write(address, [value])
-		bus.i2c_rdwr(msg)
-	return -1
-
-# Receive value from arduino
-def receive():
-	number=[]
-	for address in addresses:
-		msg = i2c_msg.read(address, 2)
-		bus.i2c_rdwr(msg)
-		val=0
-		for value in msg:
-			val+=value
-		number.append(val)
-	return number
-
 # Send a signal to Arudino to recive a value
 def GetDistanceFromArd():
 	while True:
-		send(1) #1 is signal to request informations
+		i2c.send1Byte(1, addresses) #1 is signal to request informations
 		print("Hey Arduino, I'm asking you for a distance value")
-		dist=receive()
+		dist=i2c.receive2Byte(addresses)
 		for distance in dist:
 			if (distance==504): #Have a look to i4c_d.ino for codes
 				print("What's up Arudino, are you fine?")
