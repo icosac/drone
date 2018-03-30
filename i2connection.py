@@ -1,15 +1,15 @@
 #TODO convert in binary and send / receive in binary and convert. Not really needed cause 5 meters is already too far
 from smbus2 import SMBus, i2c_msg
 
-######## ####### #	   # ###### 
-#		 #		 ##	   # #     #
-#		 #		 # #   # #     #
-######## #####	 #  #  # #     #
-	   # #		 #   # # #     #
-	   # #		 #    ## #     #
-######## ####### #     # ######
+bus=SMBus(1) #Initialize protocol
 
-bus=SMBus(1)
+######## ####### #	   # ###### 
+#        #       ##    # #     #
+#        #       # #   # #     #
+######## #####   #  #  # #     #
+       # #       #   # # #     #
+       # #       #    ## #     #
+######## ####### #     # ######
 
 #Returns 1 if the message was sent correctly, -1 if not.
 
@@ -38,12 +38,12 @@ def send1Byte(value, addresses):
 
 
 #######  ####### ####### # #       # #######
-#      # #       #		 #  #     #  #
-#      # #	 	 #		 #  #     #  #
-#     #  ######	 #		 #   #   #   ######
-#  # 	 #		 #		 #   #   #   #
-#    # 	 #		 #		 #    # # 	 #
-#      # ####### ####### #     # 	 #######
+#      # #       #       #  #     #  #
+#      # #       #       #  #     #  #
+#     #  ######  #       #   #   #   ######
+#  #     #       #       #   #   #   #
+#    #   #       #       #    # #    #
+#      # ####### ####### #     #     #######
 
 #Returns the value obtained. None if there was an error
 
